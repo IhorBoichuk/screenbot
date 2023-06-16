@@ -1,30 +1,8 @@
-# import pytesseract
-# from PIL import Image
-
-# # Відкриття зображення
-# image = Image.open('screenshot.png')
-
-# # Застосування OCR за допомогою pytesseract
-# extracted_text = pytesseract.image_to_string(image)
-
-# print(extracted_text.lower())
-
-# from tkinter import Tk, messagebox
-# from tkinter import ttk
-
-# # Створюємо вікно
-# window = Tk()
-# # frm = ttk.Frame(window, padding=10)
-# window.geometry("800x800")
-
-# # Приховуємо вікно
-# window.withdraw()
-
-
-
-
+import os
 import pytesseract
 from PIL import Image
+import tkinter as tk
+from langchain.llms import OpenAI
 
 # Встановіть шлях до файлика з українською мовою
 pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
@@ -37,33 +15,34 @@ image = Image.open('screenshot.png')
 
 # Виконайте OCR з використанням української мови
 extracted_text = pytesseract.image_to_string(image, config=custom_config)
-print(extracted_text.lower())
-
-# # Виводимо діалогове вікно з повідомленням
-# messagebox.showinfo('Повідомлення', extracted_text.lower())
-
-# # Закриваємо вікно
-# window.destroy()
+text = extracted_text.lower()
 
 
+# Створюємо поле для введення тексту
+def create_text_field(text):
+    text_widget.insert(tk.END, text)
+    text_widget.pack()
 
-# # Відображаємо вікно
-# window.mainloop()
 
-import tkinter as tk
+llm = OpenAI(temperature=0.0)
 
-def select_text():
-    selected_text = text_widget.selection_get()
-    print("Selected Text:", selected_text)
+def gener_answer(text):
+    create_text_field(llm(text))
+
+
 
 # Створюємо вікно
 window = tk.Tk()
-
-# Створюємо поле для введення тексту
 text_widget = tk.Text(window)
-text_widget.insert(tk.END, extracted_text.lower())
 
-text_widget.pack()
+
+
+def select_text():
+    selected_text = text_widget.selection_get()
+    gener_answer(str(selected_text))
+    
+    
+create_text_field(extracted_text.lower())
 
 # Кнопка для виділення тексту
 button = tk.Button(window, text="Виділити текст", command=select_text)
@@ -71,3 +50,6 @@ button.pack()
 
 # Відображаємо вікно
 window.mainloop()
+
+
+
