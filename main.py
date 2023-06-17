@@ -1,8 +1,27 @@
 import os
+import shutil
+import glob
 import pytesseract
 from PIL import Image
 import tkinter as tk
 from langchain.llms import OpenAI
+
+
+
+
+pattern = r"/home/taras/Pictures/*.png"
+
+matching_files = glob.glob(pattern)
+
+for file_path in matching_files:
+    src = file_path
+    
+
+# Генеруємо новий шлях з новим ім'ям файлу
+dst = "./screenshot.png"
+
+# Переносимо та перейменовуємо файл
+shutil.move(src, dst)
 
 # Встановіть шлях до файлика з українською мовою
 pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'
@@ -52,4 +71,5 @@ button.pack()
 window.mainloop()
 
 
-
+img_file_path = "/home/taras/screenbot/screenshot.png"
+os.remove(img_file_path)
