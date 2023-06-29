@@ -1,5 +1,6 @@
 import glob
 import os
+import time 
 import shutil
 import pytesseract
 import tkinter as tk
@@ -77,14 +78,10 @@ def main():
     
     del_screenshot()
         
-import time        
-import os
+       
+
 if __name__=="__main__":
-    
 
-
-    # directory = "/home/taras/Pictures"
-    # filename = "Screenshot from 2023-06-19 10-40-06*.png"
 
     while True:
 
@@ -100,12 +97,4 @@ if __name__=="__main__":
             print("Файл не знайдено")
             time.sleep(5)  # Затримка у секундах між перевірками
 
-        # file_path = os.path.join(directory, filename)
-        
-        # if os.path.exists(file_path):
-        #     print("Файл знайдено:", file_path)
-        #     # Виконайте додаткові дії зі знайденим файлом, якщо потрібно
-        #     main()
-        
-        # print("Файл не знайдено. Зачекайте...")
-        # 
+       
